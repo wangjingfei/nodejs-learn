@@ -19,7 +19,7 @@ function start(response) {
 	response.end();
 }
 
-function upload(response) {
+function upload(response, postData) {
 	console.log('Request: upload().');
 	response.writeHead(200, {"Content-Type": "text/plain"});
 	response.write('Hello Upload');

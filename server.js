@@ -3,9 +3,18 @@ var url = require('url');
 
 var start = function(router, handle) {
 	http.createServer(function(request, response) {
+		var postData = '';
 		var pathname = url.parse(request.url).pathname;
 		console.log('Request for: ' + pathname);
-		router.route(pathname, handle, response);
+
+		request.setEncoding('utf8');
+		request.addListener('data', function(postDataChunk) {
+			postData += postDataChunk;
+			console.log('post data trunk received: ' + postDataChunk);
+		});
+		request.addListener('end', function() {
+			router.route(pathname, handle, response, postData);
+		});
 	}).listen(8888);
 }
 
