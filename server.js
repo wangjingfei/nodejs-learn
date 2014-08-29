@@ -5,10 +5,7 @@ var start = function(router, handle) {
 	http.createServer(function(request, response) {
 		var pathname = url.parse(request.url).pathname;
 		console.log('Request for: ' + pathname);
-		var message = router.route(pathname, handle);
-		response.writeHead(200, {"Content-Type": "text/plain"});
-		response.write(message);
-		response.end();
+		router.route(pathname, handle, response);
 	}).listen(8888);
 }
 
